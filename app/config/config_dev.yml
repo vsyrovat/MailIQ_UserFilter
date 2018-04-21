@@ -39,3 +39,11 @@ monolog:
 
 #swiftmailer:
 #    delivery_addresses: ['me@example.com']
+
+nelmio_alice:
+    locale: 'en_US'
+    seed: 1
+    functions_blacklist:
+        - 'current'
+    loading_limit: 5
+    max_unique_values_retry: 150

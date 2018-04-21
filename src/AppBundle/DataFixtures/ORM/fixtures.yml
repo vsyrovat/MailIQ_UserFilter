@@ -1,0 +1,19 @@
+AppBundle\Entity\User:
+    user_{1..25}:
+        email (unique): <email()>
+        password: <password()>
+        role: <randomElement([admin, moderator, guest, good_guy])>
+
+AppBundle\Entity\UserAbout:
+    country_{@user_*}:
+        user: <current()>
+        item: 'country'
+        value: <country()>
+    firstname_{@user_*}:
+        user: <current()>
+        item: 'firstname'
+        value: <firstname()>
+    state_{@user_*}:
+        user: <current()>
+        item: 'state'
+        value: <randomElement([active, inactive])>
