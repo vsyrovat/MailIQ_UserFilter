@@ -70,9 +70,9 @@ class UserAbout
     }
 
     /**
-     * @return User
+     * @return string
      */
-    public function getItem(): User
+    public function getItem(): string
     {
         return $this->item;
     }

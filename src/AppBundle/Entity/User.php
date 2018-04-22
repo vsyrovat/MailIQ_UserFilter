@@ -53,7 +53,7 @@ class User
     private $lastVisit;
 
     /**
-     * @ORM\OneToMany(targetEntity="UserAbout", mappedBy="user", cascade={"persist","remove"})
+     * @ORM\OneToMany(targetEntity="UserAbout", mappedBy="user", cascade={"persist","remove"}, fetch="EAGER")
      */
     private $abouts;
 
