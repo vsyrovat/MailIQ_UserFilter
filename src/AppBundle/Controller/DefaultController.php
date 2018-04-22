@@ -28,16 +28,44 @@ class DefaultController extends Controller
     /**
      * @Route("/filter", name="filter")
      */
-    public function filterAction(ObjectManager $em, FilterConstructor $fc)
+    public function filterAction(Request $request, ObjectManager $em, FilterConstructor $fc)
     {
         $userRepository = $em->getRepository(User::class);
 
-        $filter = $fc->eq('country', 'Albania');
+        switch ($request->get('id')) {
+            case 1:
+                $title = "(ID = 10) ИЛИ (Страна != Россия)";
+                $filter = $fc->orX(
+                    $fc->eq('id', 10),
+                    $fc->neq('country', 'Россия')
+                );
+                break;
+            case 2:
+                $title = "(Страна = Россия) И (Состояние пользователя != active)";
+                $filter = $fc->andX(
+                    $fc->eq('country', 'Россия'),
+                    $fc->neq('state', 'active')
+                );
+                break;
+            case 3:
+                $title = "(((Страна != Россия) ИЛИ (Состояние пользователя = active)) И (E-Mail = reichel.zetta@hotmail.com)) ИЛИ (Имя != Юра)";
+                $filter = $fc->orX(
+                    $fc->andX(
+                        $fc->orX(
+                            $fc->neq('country', 'Россия'),
+                            $fc->eq('state', 'active')
+                        ),
+                        $fc->eq('email', 'reichel.zetta@hotmail.com')
+                    ),
+                    $fc->neq('firstname', 'Юра')
+                );
+                break;
+        }
 
         $users = $userRepository->findByFilter($filter);
 
         return $this->render('default/userlist.twig', [
-            'title' => 'Filtered users',
+            'title' => $title,
             'users' => $users
         ]);
     }

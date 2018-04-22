@@ -1,5 +1,5 @@
 AppBundle\Entity\User:
-    user_{1..25}:
+    user_{1..30}:
         email (unique): <email()>
         password: <password()>
         role: <randomElement([admin, moderator, guest, good_guy])>
@@ -8,11 +8,11 @@ AppBundle\Entity\UserAbout:
     country_{@user_*}:
         user: <current()>
         item: 'country'
-        value: <country()>
+        value: <randomElement([Россия, Япония, Китай, Норвегия])>
     firstname_{@user_*}:
         user: <current()>
         item: 'firstname'
-        value: <firstname()>
+        value: <randomElement([Оля, Юра, Света, Миша])>
     state_{@user_*}:
         user: <current()>
         item: 'state'
